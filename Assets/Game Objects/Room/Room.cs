@@ -8,6 +8,8 @@ public class Room : MonoBehaviour
 
 	void Awake()
 	{
+		var size = new Vector2(Random.Range(3, 7), Random.Range(3, 7));
 		GetComponent<SpriteRenderer>().color = colors[Random.Range(0, colors.Length)];
+		GetComponent<SpriteRenderer>().size = size;
 	}
 }

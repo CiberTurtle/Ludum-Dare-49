@@ -58,7 +58,7 @@ public class GameManager : MonoBehaviour
 		{
 			heldRoom.velocity = (pointerPosition - (Vector2)heldRoom.position) * moveVelocityMultiplier;
 
-			if (drop || (heldRoom.velocity.magnitude > 16 && heldRoom.IsTouchingLayers(roomLayer)))
+			if (drop)
 			{
 				heldRoom = null;
 			}
