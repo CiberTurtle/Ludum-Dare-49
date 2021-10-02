@@ -25,16 +25,13 @@ public class BoxDropManager : MonoBehaviour
 	{
 		tilDrop = Random.Range(minDropTime, maxDropTime);
 		boxCount = 0;
-		tilBox = 0;
+		tilBox = Random.Range(minTweenBox, maxTweenBox);
 	}
 
 	void FixedUpdate()
 	{
 		if (tilDrop <= 0)
 		{
-			if (boxCount <= 0)
-				boxCount = Random.Range(minBox, maxBox);
-
 			if (tilBox <= 0)
 			{
 				Instantiate(box, spawns[Random.Range(0, spawns.Length)]);
@@ -47,8 +44,10 @@ public class BoxDropManager : MonoBehaviour
 			if (boxCount == 0)
 			{
 				tilDrop = Random.Range(minDropTime, maxDropTime);
+				boxCount = Random.Range(minBox, maxBox);
 			}
 		}
-		tilDrop -= 1 * Time.deltaTime;
+		else
+			tilDrop -= 1 * Time.deltaTime;
 	}
 }
