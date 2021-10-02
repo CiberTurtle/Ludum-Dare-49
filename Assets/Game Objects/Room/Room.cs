@@ -4,15 +4,10 @@ using UnityEngine;
 
 public class Room : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+	[SerializeField] Color[] colors;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+	void Awake()
+	{
+		GetComponent<SpriteRenderer>().color = colors[Random.Range(0, colors.Length)];
+	}
 }

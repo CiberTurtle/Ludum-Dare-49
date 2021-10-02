@@ -1,14 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
 	public static GameManager current { get; private set; }
 
+	[SerializeField] float moveVelocityMultiplier = 10;
+	[Space]
+	[SerializeField] Transform highestHeightMarker;
+	[Space]
+	[SerializeField] TMP_Text scoreText;
+	[Space]
 	[SerializeField] LayerMask roomLayer;
 
-	Transform objectInHand;
+	public int score { get => _score; set { _score = value; scoreText.text = $"{value} Points"; } }
+	int _score;
+
+	float highestHeight;
+
+	Rigidbody2D heldRoom;
+
+	Transform roomsContainer;
 
 	Controls controls;
 	bool pickup;
@@ -28,32 +42,38 @@ public class GameManager : MonoBehaviour
 		controls.Game.Pickup.canceled += ctx => drop = true;
 	}
 
+	void OnEnable()
+	{
+		roomsContainer = GameObject.FindGameObjectWithTag("Rooms Container").transform;
+	}
+
+	void Start()
+	{
+		score = 0;
+	}
+
 	void FixedUpdate()
 	{
-		if (objectInHand != null)
+		if (heldRoom != null)
 		{
-			objectInHand.GetComponent<Rigidbody2D>().velocity = (pointerPosition - (Vector2)objectInHand.position) * 10;
-			// objectInHand.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+			heldRoom.velocity = (pointerPosition - (Vector2)heldRoom.position) * moveVelocityMultiplier;
 
-			if (drop)
+			if (drop || (heldRoom.velocity.magnitude > 16 && heldRoom.IsTouchingLayers(roomLayer)))
 			{
-				if (objectInHand != null)
-				{
-					objectInHand = null;
-				}
+				heldRoom = null;
 			}
 		}
 		else
 		{
 			if (pickup)
 			{
-				if (objectInHand == null)
+				if (heldRoom == null)
 				{
-					var objectAtCursor = Physics2D.OverlapPoint(pointerPosition, roomLayer)?.transform;
+					var objectAtCursor = Physics2D.OverlapPoint(pointerPosition, roomLayer)?.GetComponent<Rigidbody2D>();
 
 					if (objectAtCursor != null)
 					{
-						objectInHand = objectAtCursor;
+						heldRoom = objectAtCursor;
 					}
 				}
 			}
@@ -63,5 +83,27 @@ public class GameManager : MonoBehaviour
 
 		pickup = false;
 		drop = false;
+
+		var highestRoomHeight = 0f;
+		Transform highestRoom = null;
+		foreach (Transform room in roomsContainer)
+		{
+			if (room == heldRoom) continue;
+			// if (room.GetComponent<Rigidbody2D>().velocity.magnitude > 3f * Time.fixedDeltaTime) continue;
+			if (!room.GetComponent<Rigidbody2D>().IsTouchingLayers()) continue;
+
+			var roomHeight = room.position.y;
+			if (roomHeight > highestRoomHeight)
+			{
+				highestRoomHeight = roomHeight;
+				highestRoom = room;
+			}
+		}
+
+		if (highestRoomHeight > highestHeight)
+		{
+			highestHeight = highestRoomHeight;
+			highestHeightMarker.position = new Vector3(0, highestHeight, 0);
+		}
 	}
 }
