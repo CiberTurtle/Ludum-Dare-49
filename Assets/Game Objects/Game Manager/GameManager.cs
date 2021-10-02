@@ -25,8 +25,8 @@ public class GameManager : MonoBehaviour
 	[Space]
 	[SerializeField] LayerMask roomLayer;
 
-	public int score { get => _score; set { _score = value; scoreText.text = $"{value} Points"; } }
-	int _score;
+	public int money { get => _money; set { _money = value; scoreText.text = _money.ToString("C"); } }
+	int _money;
 
 	float highestHeight;
 	Bounds cameraBounds;
@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour
 	Rigidbody2D heldRoom;
 
 	Camera cam;
+	Transform objects;
 	Transform roomsContainer;
 
 	Controls controls;
@@ -56,19 +57,20 @@ public class GameManager : MonoBehaviour
 
 	void OnEnable()
 	{
-		roomsContainer = GameObject.FindGameObjectWithTag("Rooms Container").transform;
+		objects = GameObject.Find("Objects").transform;
+		roomsContainer = objects.Find("Rooms").transform;
 
 		cam = Camera.main;
 	}
 
 	void Start()
 	{
-		score = 0;
+		money = 0;
 	}
 
 	void LateUpdate()
 	{
-		cam.transform.position = Vector2.Lerp(cam.transform.position, new Vector3(cameraBounds.center.x, Math.Max(cameraBounds.center.y, minCameraYPosition), 0) + new Vector3(0, cameraPositionUpperSafezone, 0), Time.deltaTime * cameraPositionSmoothing);
+		cam.transform.position = Vector2.Lerp(cam.transform.position, new Vector3(cameraBounds.center.x, Math.Max(cameraBounds.center.y, minCameraYPosition + cam.orthographicSize), 0) + new Vector3(0, cameraPositionUpperSafezone, 0), Time.deltaTime * cameraPositionSmoothing);
 		cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, Mathf.Clamp(Mathf.Max(cameraBounds.size.x * (1f / cam.aspect), cameraBounds.size.y) / 2 + cameraSizeSafezone, minCameraSize, maxCameraSize), Time.deltaTime * cameraSizeSmoothing);
 	}
 
@@ -102,33 +104,43 @@ public class GameManager : MonoBehaviour
 
 		oldPointerPosition = pointerPosition;
 
-		pickup = false;
-		drop = false;
-
-		cameraBounds = new Bounds();
-
-		var highestRoomHeight = 0f;
-		Transform highestRoom = null;
-		foreach (Transform room in roomsContainer)
+		if (heldRoom == null)
 		{
-			cameraBounds.Encapsulate(room.position);
-
-			if (room == heldRoom) continue;
-			// if (room.GetComponent<Rigidbody2D>().velocity.magnitude > 3f * Time.fixedDeltaTime) continue;
-			if (!room.GetComponent<Rigidbody2D>().IsTouchingLayers()) continue;
-
-			var roomHeight = room.position.y;
-			if (roomHeight > highestRoomHeight)
+			var highestRoomHeight = 0f;
+			Transform highestRoom = null;
+			foreach (Transform room in roomsContainer)
 			{
-				highestRoomHeight = roomHeight;
-				highestRoom = room;
+				// if (room.GetComponent<Rigidbody2D>().velocity.magnitude > 3f * Time.fixedDeltaTime) continue;
+				if (!room.GetComponent<Rigidbody2D>().IsTouchingLayers()) continue;
+
+				var roomHeight = room.position.y;
+				if (roomHeight > highestRoomHeight)
+				{
+					highestRoomHeight = roomHeight;
+					highestRoom = room;
+				}
+			}
+
+			if (highestRoomHeight > highestHeight)
+			{
+				highestHeight = highestRoomHeight;
+				highestHeightMarker.position = new Vector3(0, highestHeight, 0);
 			}
 		}
 
-		if (highestRoomHeight > highestHeight)
+		cameraBounds = new Bounds();
+		CaptureBounds(objects);
+
+		pickup = false;
+		drop = false;
+	}
+
+	void CaptureBounds(Transform root)
+	{
+		foreach (Transform obj in root)
 		{
-			highestHeight = highestRoomHeight;
-			highestHeightMarker.position = new Vector3(0, highestHeight, 0);
+			cameraBounds.Encapsulate(obj.position);
+			CaptureBounds(obj);
 		}
 	}
 }

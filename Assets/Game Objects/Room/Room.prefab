@@ -69,7 +69,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 1
-  m_Mass: 14.6025
+  m_Mass: 0.9025001
   m_LinearDrag: 0.9
   m_AngularDrag: 0.5
   m_GravityScale: 1
@@ -87,16 +87,16 @@ BoxCollider2D:
   m_GameObject: {fileID: 8770169910260228309}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: cf02329e3d460ad4781f11e3f5eee961, type: 2}
+  m_Material: {fileID: 6200000, guid: 0c4367be0aaee0944895deb8cf1f3b07, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
-    border: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+    border: {x: 0.390625, y: 0.390625, z: 0.390625, w: 0.390625}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 1, y: 1}
-    newSize: {x: 5, y: 3}
+    newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 2
     adaptiveTiling: 0
@@ -145,12 +145,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 60a1e93faa6ae4a4c83dc69dad7b1828, type: 3}
+  m_Sprite: {fileID: 21300000, guid: da934bacd31b3dc4091a009d7986a769, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
-  m_Size: {x: 5, y: 3}
+  m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
