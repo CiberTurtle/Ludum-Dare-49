@@ -181,7 +181,7 @@ MonoBehaviour:
   priority: 0
   blendDistance: 0
   weight: 1
-  sharedProfile: {fileID: 11400000, guid: c7d61e63b6e4f5545a62d2d17d45b619, type: 2}
+  sharedProfile: {fileID: 11400000, guid: 8de76938fb764f3458d4937cd23c5186, type: 2}
 --- !u!1 &3530902460296751098
 GameObject:
   m_ObjectHideFlags: 0
@@ -208,7 +208,7 @@ Transform:
   m_GameObject: {fileID: 3530902460296751098}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -100, z: 0}
-  m_LocalScale: {x: 100, y: 0.25, z: 1}
+  m_LocalScale: {x: 1000, y: 0.25, z: 1}
   m_Children: []
   m_Father: {fileID: 8538718112125936254}
   m_RootOrder: 4
@@ -414,6 +414,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveVelocityMultiplier: 10
+  rotateVelocityMultiplier: 100
+  maxCameraSize: 999
+  minCameraSize: 15
+  minCameraYPosition: 20
+  cameraSizeSafezone: 7.5
+  cameraPositionUpperSafezone: 5
+  cameraPositionSmoothing: 1
+  cameraSizeSmoothing: 1
   highestHeightMarker: {fileID: 1176838376692765463}
   scoreText: {fileID: 5208678048836565514}
   roomLayer:
@@ -718,12 +726,20 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7637782171304048074, guid: 297c27f6440c6cc439fc5277ef26a6c0, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 7637782171304048074, guid: 297c27f6440c6cc439fc5277ef26a6c0, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 7637782171304048074, guid: 297c27f6440c6cc439fc5277ef26a6c0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7637782171304048074, guid: 297c27f6440c6cc439fc5277ef26a6c0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3
+      value: -50
       objectReference: {fileID: 0}
     - target: {fileID: 7637782171304048074, guid: 297c27f6440c6cc439fc5277ef26a6c0, type: 3}
       propertyPath: m_LocalPosition.z
