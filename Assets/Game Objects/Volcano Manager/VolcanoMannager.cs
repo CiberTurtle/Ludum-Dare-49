@@ -25,7 +25,7 @@ public class VolcanoMannager : MonoBehaviour
 	{
 		tilVolcano = Random.Range(minVolcanoTime, maxVolcanoTime);
 		meteorCount = 0;
-		tilMeteor = 0;
+		tilMeteor = Random.Range(minTweenMeteors, maxTweenMeteors);
 	}
 
 	void FixedUpdate()
@@ -47,6 +47,7 @@ public class VolcanoMannager : MonoBehaviour
 				meteorCount = Random.Range(minMetors, maxMeteors);
 			}
 		}
-		tilVolcano -= 1 * Time.deltaTime;
+		else
+			tilVolcano -= 1 * Time.deltaTime;
 	}
 }
