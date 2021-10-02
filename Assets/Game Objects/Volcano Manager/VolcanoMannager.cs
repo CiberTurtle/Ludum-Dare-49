@@ -32,9 +32,6 @@ public class VolcanoMannager : MonoBehaviour
 	{
 		if (tilVolcano <= 0)
 		{
-			if (meteorCount <= 0)
-				meteorCount = Random.Range(minMetors, maxMeteors);
-
 			if (tilMeteor <= 0)
 			{
 				Instantiate(volcanoMeteor, spawns[Random.Range(0, spawns.Length)]);
@@ -47,6 +44,7 @@ public class VolcanoMannager : MonoBehaviour
 			if (meteorCount == 0)
 			{
 				tilVolcano = Random.Range(minVolcanoTime, maxVolcanoTime);
+				meteorCount = Random.Range(minMetors, maxMeteors);
 			}
 		}
 		tilVolcano -= 1 * Time.deltaTime;

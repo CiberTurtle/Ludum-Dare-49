@@ -21,7 +21,7 @@ public class VolcanoMeteor : MonoBehaviour
 	{
 		try
 		{
-			other.gameObject.GetComponent<Rigidbody2D>().AddForce(-transform.up * hitForce);
+			other.gameObject.GetComponent<Rigidbody2D>().AddForce(-transform.up * hitForce + transform.right * Random.Range(-.2f, .2f) * hitForce);
 			Destroy(gameObject);
 		}
 		catch (System.Exception)
