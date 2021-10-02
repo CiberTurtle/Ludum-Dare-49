@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MeteorSpawner : MonoBehaviour
 {
-	public GameObject meteor;
+	[SerializeField] GameObject meteor;
 
 	[SerializeField] float minMeteorSpawnTime;
 	[SerializeField] float maxMeteorSpawnTime;

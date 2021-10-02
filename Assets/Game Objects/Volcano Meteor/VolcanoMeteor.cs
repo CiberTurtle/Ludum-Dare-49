@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Meteor : MonoBehaviour
+public class VolcanoMeteor : MonoBehaviour
 {
 	[SerializeField] float speed;
 	[SerializeField] float hitForce;
@@ -14,14 +14,14 @@ public class Meteor : MonoBehaviour
 
 	void Update()
 	{
-		rb.velocity = transform.up * speed;
+		rb.velocity = -transform.up * speed;
 	}
 
 	private void OnCollisionEnter2D(Collision2D other)
 	{
 		try
 		{
-			other.gameObject.GetComponent<Rigidbody2D>().AddForce(transform.up * hitForce);
+			other.gameObject.GetComponent<Rigidbody2D>().AddForce(-transform.up * hitForce);
 			Destroy(gameObject);
 		}
 		catch (System.Exception)
